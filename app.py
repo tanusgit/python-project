@@ -1,15 +1,41 @@
-from flask import Flask, render_template, request
-import sqlite3
+import io
+from random import random
 
+import inline as inline
+import matplotlib as matplotlib
+from flask import Flask, render_template, request, Response
+import sqlite3
+import pandas as pd
+import seaborn as sns
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_template import FigureCanvas
+from matplotlib.figure import Figure
 
 app = Flask(__name__)
 
+def plot_png():
+    d = plot_data()
+    a0 = []
+    a1 = []
+    for i,j in d:
+        a0.append(int(i))
+        a1.append(int(j))
+    d = {"hw": a0, "exam": a1}
+    df = pd.DataFrame(d)
+    #print(a0, a1)
+    plot = sns.lmplot(data=df,
+                           x="hw",
+                           y="exam")
+    plt.title("Correlation bewteen homework and exam performance ")
+    sns.distplot(df)
+    plt.savefig('static/images/regression1.png')
 
 @app.route('/')
 def index():
     ex = list()
+    plot_png()
     return render_template('Home2.html', ex = ex)
-
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_student():
@@ -70,9 +96,19 @@ def list():
     con = sqlite3.connect("sjsu_cs122.db")
     cur = con.cursor()
     cur.execute("select * from students")
-
     rows = cur.fetchall()
-    return (rows)
+    con.close()
+    return rows
+
+def plot_data():
+    con = sqlite3.connect("sjsu_cs122.db")
+    cur = con.cursor()
+    cur.execute("select hw, exam from students")
+    plot_data = cur.fetchall()
+    con.close()
+    return plot_data
+
+
 
 if __name__ == '__main__':
    app.run(debug = True)
