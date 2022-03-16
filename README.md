@@ -26,4 +26,7 @@ You can add details like student's name, id and grade in the database.
 # Specific student's details
 ![alt text](https://github.com/tanusgit/python-project/blob/main/static/images/details.png)
 
+# Correlation between student's homework and exam performance
+![alt text](https://github.com/tanusgit/python-project/blob/main/static/images/graph.png)
+
 
