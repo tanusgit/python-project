@@ -20,4 +20,7 @@ You can add details like student's name, id and grade in the database.
 # Add student
 ![alt text](https://github.com/tanusgit/python-project/blob/main/static/images/add.png)
 
+# Student's list
+![alt text](https://github.com/tanusgit/python-project/blob/main/static/images/student.png)
+
 
